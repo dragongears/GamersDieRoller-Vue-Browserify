@@ -1,15 +1,16 @@
 <template>
-  <div id="modModal" class="modal fade" tabindex="-1" role="dialog">
+  <div :id="id" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-sm" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title">Modify roll by:</h4>
+          <h4 class="modal-title">{{title}}</h4>
+          <h5 class="modal-title"  v-if="subtitle">{{subtitle}}</h5>
         </div>
         <div class="modal-body">
           <div class="button-panel">
-            <button v-for="mod in mods" v-on:click="doChangeMod" class="btn-num btn btn-default">{{mod}}</button>
-            <div class="btn-group" data-toggle="buttons">
+            <button v-for="item in items" v-on:click="doChangeMod" class="btn-num btn btn-default">{{item}}</button>
+            <div v-if="signButtons" class="btn-group" data-toggle="buttons">
               <label id="optionPos" class="btn btn-default active">
                 <input type="radio" autocomplete="off">+
               </label>
@@ -26,19 +27,45 @@
 
 <script>
   import Vue from 'vue'
-  import store from '../store'
 
   export default Vue.extend({
-    name: 'modifier-modal',
+    name: 'die-modal',
+    props: {
+      id: {
+        type: String,
+        default: 'dieModal'
+      },
+      title: {
+        type: String,
+        default: 'Die Modal'
+      },
+      subtitle: {
+        type: String
+      },
+      items: {
+        type: Array,
+        required: true
+      },
+      signButtons: {
+        type: Boolean,
+        default: false
+      }
+    },
     data () {
       return {
-        mods: store.Dice.prototype.mod
       }
     },
     methods: {
       doChangeMod (event) {
-        this.$emit('changeMod', parseInt(event.target.innerText, 10) * ($('#optionPos').hasClass('active') ? 1 : -1))
-        $('#modModal').modal('hide')
+        let val = parseInt(event.target.innerText, 10)
+
+        if (this.signButtons) {
+          val = val * ($('#optionPos').hasClass('active') ? 1 : -1)
+        }
+
+        this.$emit('change', val)
+
+        $('#' + this.id).modal('hide')
       }
     }
   })
