@@ -1,7 +1,7 @@
 <template>
   <div class="die-panel">
     <div class="roll-button">
-      <button type="button" class="btn btn-primary btn-lg" v-on:click="diceInHand.roll()">{{ diceInHand.result }}</button>
+      <button type="button" class="btn btn-primary btn-lg" v-on:click="doRoll()">{{ diceInHand.result }}</button>
     </div>
     <div class = "dice-buttons">
       <button class="btn btn-default" v-on:click="doMult">{{diceInHand.multiplier}}</button><span>d</span><button class="btn btn-default" v-on:click="doType">{{diceInHand.die}}</button><button class="btn btn-default" v-on:click="doMod">{{diceInHand.modifierStr()}}</button>
@@ -49,6 +49,10 @@
       this.diceInHand.result = 'Roll'
     },
     methods: {
+      doRoll: function () {
+        this.diceInHand.roll()
+        this.$emit('roll', this.diceInHand.result)
+      },
       doMult: function () {
         $('#multModal').modal({backdrop: 'static', keyboard: 'false', show: 'true'})
       },

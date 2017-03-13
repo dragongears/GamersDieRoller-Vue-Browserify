@@ -37,7 +37,7 @@
       <div class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
         <div class="panel panel-info" >
           <div class="panel-body" >
-            <die-panel :dice-in-hand="diceInHand" :mult="mult" :type="type" :mod="mod"></die-panel>
+            <die-panel :dice-in-hand="diceInHand" :mult="mult" :type="type" :mod="mod" v-on:roll="newRoll"></die-panel>
           </div>
         </div>
       </div>
@@ -53,41 +53,9 @@
       <div class="scroller-holder">
           <div class="scroller">
             <ul class="list-group scroller-content">
-              <li class="list-group-item">Cras justo odio</li>
-              <li class="list-group-item">Dapibus ac facilisis in</li>
-              <li class="list-group-item">Morbi leo risus</li>
-              <li class="list-group-item">Porta ac consectetur ac</li>
-              <li class="list-group-item">Vestibulum at eros</li>
-              <li class="list-group-item">Cras justo odio</li>
-              <li class="list-group-item">Dapibus ac facilisis in</li>
-              <li class="list-group-item">Morbi leo risus</li>
-              <li class="list-group-item">Porta ac consectetur ac</li>
-              <li class="list-group-item">Vestibulum at eros</li>
-              <li class="list-group-item">Cras justo odio</li>
-              <li class="list-group-item">Dapibus ac facilisis in</li>
-              <li class="list-group-item">Morbi leo risus</li>
-              <li class="list-group-item">Porta ac consectetur ac</li>
-              <li class="list-group-item">Vestibulum at eros</li>
-              <li class="list-group-item">Cras justo odio</li>
-              <li class="list-group-item">Dapibus ac facilisis in</li>
-              <li class="list-group-item">Morbi leo risus</li>
-              <li class="list-group-item">Porta ac consectetur ac</li>
-              <li class="list-group-item">Vestibulum at eros</li>
-              <li class="list-group-item">Cras justo odio</li>
-              <li class="list-group-item">Dapibus ac facilisis in</li>
-              <li class="list-group-item">Morbi leo risus</li>
-              <li class="list-group-item">Porta ac consectetur ac</li>
-              <li class="list-group-item">Vestibulum at eros</li>
-              <li class="list-group-item">Cras justo odio</li>
-              <li class="list-group-item">Dapibus ac facilisis in</li>
-              <li class="list-group-item">Morbi leo risus</li>
-              <li class="list-group-item">Porta ac consectetur ac</li>
-              <li class="list-group-item">Vestibulum at eros</li>
-              <li class="list-group-item">Cras justo odio</li>
-              <li class="list-group-item">Dapibus ac facilisis in</li>
-              <li class="list-group-item">Morbi leo risus</li>
-              <li class="list-group-item">Porta ac consectetur ac</li>
-              <li class="list-group-item">Vestibulum at eros</li>
+              <li class="list-group-item" v-for="result in rollHistory">
+                {{ result }}
+              </li>
             </ul>
           </div>
         </div>
@@ -111,11 +79,17 @@
         diceInHand: new store.Dice(),
         mult: store.Dice.prototype.mult,
         type: store.Dice.prototype.type,
-        mod: store.Dice.prototype.mod
+        mod: store.Dice.prototype.mod,
+        rollHistory: []
       }
     },
     components: {
       'die-panel': DiePanel
+    },
+    methods: {
+      newRoll: function (result) {
+        this.rollHistory.unshift(result)
+      }
     }
   })
 </script>
