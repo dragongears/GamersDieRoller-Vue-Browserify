@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="flex-holder">
 
     <!-- HEADER
     ================================================== -->
@@ -32,23 +32,27 @@
       </div>
     </header>
 
-    <section>
-      <div class="container">
-        <div class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-          <div class="panel panel-info" >
-            <div class="panel-body" >
-              <die-panel :dice-in-hand="diceInHand" :mult="mult" :type="type" :mod="mod"></die-panel>
-            </div>
+    <section class="container flex-holder flex">
+
+      <div class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+        <div class="panel panel-info" >
+          <div class="panel-body" >
+            <die-panel :dice-in-hand="diceInHand" :mult="mult" :type="type" :mod="mod"></die-panel>
           </div>
         </div>
       </div>
-    </section>
 
-    <section class="container flex">
-        <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+      <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+        <ul class="nav nav-tabs nav-justified">
+          <li role="presentation" class="active"><a href="#">Favorites</a></li>
+          <li role="presentation"><a href="#">History</a></li>
+        </ul>
+      </div>
+
+      <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 flex">
+      <div class="scroller-holder">
           <div class="scroller">
-            <div>This is some test content to give height</div>
-            <ul class="list-group">
+            <ul class="list-group scroller-content">
               <li class="list-group-item">Cras justo odio</li>
               <li class="list-group-item">Dapibus ac facilisis in</li>
               <li class="list-group-item">Morbi leo risus</li>
@@ -87,6 +91,8 @@
             </ul>
           </div>
         </div>
+      </div>
+
     </section>
 
     <!--<img src="./assets/logo.png">-->
@@ -121,9 +127,8 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     color: #2c3e50;
-    margin-top: 50px;
-    height: 90vh;
-    background-color: #e3e3e3;
+    padding-top: 50px;
+    height: 100vh;
   }
 
   .nav i.glyphicon {
@@ -134,16 +139,35 @@
     margin-top: 50px;
   }
 
-  #app {
+  .flex-holder {
     display: flex;
     flex-direction: column;
   }
 
-  #app > * {
+  .flex-holder > * {
     flex: 0 0 auto;
   }
 
-  #app > .flex {
-    flex: 1 1 auto
+  .flex-holder > .flex {
+    flex: 1 1 auto;
+    position: relative;
+  }
+
+  .scroller-holder {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 15px;
+    right: 15px;
+    margin-bottom: 20px;
+  }
+
+  .scroller {
+    height: 100%;
+    overflow: auto;
+  }
+
+  .scroller-content {
+    margin: 0;
   }
 </style>
