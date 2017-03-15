@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="flex-holder">
 
     <!-- HEADER
     ================================================== -->
@@ -32,16 +32,27 @@
       </div>
     </header>
 
-    <section>
-      <div class="container">
-        <div class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-          <div class="panel panel-info" >
-            <div class="panel-body" >
-              <die-panel :dice-in-hand="diceInHand" :mult="mult" :type="type" :mod="mod"></die-panel>
-            </div>
+    <section class="container flex-holder flex">
+
+      <div class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+        <div class="panel panel-default" >
+          <div class="panel-body" >
+            <die-panel :dice-in-hand="diceInHand" v-on:roll="newRoll"></die-panel>
           </div>
         </div>
       </div>
+
+      <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+        <ul class="nav nav-tabs nav-justified">
+          <li role="presentation" class="active"><a href="#">Favorites</a></li>
+          <li role="presentation"><a href="#">History</a></li>
+        </ul>
+      </div>
+
+      <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 flex">
+        <roll-history :list="rollHistory"></roll-history>
+      </div>
+
     </section>
 
     <!--<img src="./assets/logo.png">-->
@@ -52,19 +63,24 @@
   import Vue from 'vue'
   import store from './store'
   import DiePanel from './components/DiePanel.vue'
+  import RollHistory from './components/RollHistory.vue'
 
   export default Vue.extend({
     name: 'app',
     data () {
       return {
         diceInHand: new store.Dice(),
-        mult: store.Dice.prototype.mult,
-        type: store.Dice.prototype.type,
-        mod: store.Dice.prototype.mod
+        rollHistory: []
       }
     },
     components: {
-      'die-panel': DiePanel
+      'die-panel': DiePanel,
+      'roll-history': RollHistory
+    },
+    methods: {
+      newRoll: function (result) {
+        this.rollHistory.unshift(result)
+      }
     }
   })
 </script>
@@ -76,7 +92,8 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     color: #2c3e50;
-    margin-top: 50px;
+    padding-top: 50px;
+    height: 100vh;
   }
 
   .nav i.glyphicon {
@@ -85,5 +102,19 @@
 
   .mainbox {
     margin-top: 50px;
+  }
+
+  .flex-holder {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .flex-holder > * {
+    flex: 0 0 auto;
+  }
+
+  .flex-holder > .flex {
+    flex: 1 1 auto;
+    position: relative;
   }
 </style>
