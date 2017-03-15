@@ -35,9 +35,9 @@
     <section class="container flex-holder flex">
 
       <div class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-        <div class="panel panel-info" >
+        <div class="panel panel-default" >
           <div class="panel-body" >
-            <die-panel :dice-in-hand="diceInHand" :mult="mult" :type="type" :mod="mod" v-on:roll="newRoll"></die-panel>
+            <die-panel :dice-in-hand="diceInHand" v-on:roll="newRoll"></die-panel>
           </div>
         </div>
       </div>
@@ -53,8 +53,9 @@
       <div class="scroller-holder">
           <div class="scroller">
             <ul class="list-group scroller-content">
-              <li class="list-group-item" v-for="result in rollHistory">
-                {{ result }}
+              <li class="list-group-item" v-for="dih in rollHistory">
+                {{dih.toString()}}
+                <span class="badge">{{ dih.result }}</span>
               </li>
             </ul>
           </div>
@@ -77,9 +78,6 @@
     data () {
       return {
         diceInHand: new store.Dice(),
-        mult: store.Dice.prototype.mult,
-        type: store.Dice.prototype.type,
-        mod: store.Dice.prototype.mod,
         rollHistory: []
       }
     },
@@ -139,9 +137,17 @@
   .scroller {
     height: 100%;
     overflow: auto;
+    border-left: 1px #ddd solid;
+    border-right: 1px #ddd solid;
+    border-bottom: 1px #ddd solid;
   }
 
   .scroller-content {
-    margin: 0;
+    margin: 3px;
+  }
+
+  .list-group-item > .badge {
+    margin-top: -2px;
+    font-size: 22px;
   }
 </style>
