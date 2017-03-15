@@ -50,16 +50,7 @@
       </div>
 
       <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 flex">
-      <div class="scroller-holder">
-          <div class="scroller">
-            <ul class="list-group scroller-content">
-              <li class="list-group-item" v-for="dih in rollHistory">
-                {{dih.toString()}}
-                <span class="badge">{{ dih.result }}</span>
-              </li>
-            </ul>
-          </div>
-        </div>
+        <roll-history :list="rollHistory"></roll-history>
       </div>
 
     </section>
@@ -72,6 +63,7 @@
   import Vue from 'vue'
   import store from './store'
   import DiePanel from './components/DiePanel.vue'
+  import RollHistory from './components/RollHistory.vue'
 
   export default Vue.extend({
     name: 'app',
@@ -82,7 +74,8 @@
       }
     },
     components: {
-      'die-panel': DiePanel
+      'die-panel': DiePanel,
+      'roll-history': RollHistory
     },
     methods: {
       newRoll: function (result) {
@@ -123,31 +116,5 @@
   .flex-holder > .flex {
     flex: 1 1 auto;
     position: relative;
-  }
-
-  .scroller-holder {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 15px;
-    right: 15px;
-    margin-bottom: 20px;
-  }
-
-  .scroller {
-    height: 100%;
-    overflow: auto;
-    border-left: 1px #ddd solid;
-    border-right: 1px #ddd solid;
-    border-bottom: 1px #ddd solid;
-  }
-
-  .scroller-content {
-    margin: 3px;
-  }
-
-  .list-group-item > .badge {
-    margin-top: -2px;
-    font-size: 22px;
   }
 </style>
