@@ -1,14 +1,14 @@
 <template>
   <div class="die-panel">
     <div class="roll-button">
-      <button type="button" class="btn btn-primary btn-lg" v-on:click="diceInHand.roll()">{{ diceInHand.result }}</button>
+      <button type="button" class="btn btn-primary btn-lg" v-on:click="doRoll()">{{ diceInHand.result }}</button>
     </div>
     <div class = "dice-buttons">
       <button class="btn btn-default" v-on:click="doMult">{{diceInHand.multiplier}}</button><span>d</span><button class="btn btn-default" v-on:click="doType">{{diceInHand.die}}</button><button class="btn btn-default" v-on:click="doMod">{{diceInHand.modifierStr()}}</button>
     </div>
-    <multiplier-dialog id="multModal" v-on:change="changeMult" :items="mult" title="Number of dice to roll:"></multiplier-dialog>
-    <die-type-dialog id="diceModal" v-on:change="changeType" :items="type" title="Type of die to roll:" subtitle="(Number of sides)"></die-type-dialog>
-    <modifier-dialog id="modModal" v-on:change="changeMod" :items="mod" title="Modify roll by:" :sign-buttons="true"></modifier-dialog>
+    <multiplier-dialog id="multModal" v-on:change="changeMult" :items="diceInHand.mult" title="Number of dice to roll:"></multiplier-dialog>
+    <die-type-dialog id="diceModal" v-on:change="changeType" :items="diceInHand.type" title="Type of die to roll:" subtitle="(Number of sides)"></die-type-dialog>
+    <modifier-dialog id="modModal" v-on:change="changeMod" :items="diceInHand.mod" title="Modify roll by:" :sign-buttons="true"></modifier-dialog>
   </div>
 </template>
 
@@ -21,18 +21,6 @@
     props: {
       diceInHand: {
         type: Object,
-        required: true
-      },
-      mult: {
-        type: Array,
-        required: true
-      },
-      type: {
-        type: Array,
-        required: true
-      },
-      mod: {
-        type: Array,
         required: true
       }
     },
@@ -49,6 +37,20 @@
       this.diceInHand.result = 'Roll'
     },
     methods: {
+      doRoll: function () {
+        this.diceInHand.roll()
+        this.$emit(
+          'roll',
+          {
+            result: this.diceInHand.result,
+            die: this.diceInHand.die,
+            modifier: this.diceInHand.modifier,
+            multiplier: this.diceInHand.multiplier,
+            toString: this.diceInHand.toString,
+            modifierStr: this.diceInHand.modifierStr
+          }
+        )
+      },
       doMult: function () {
         $('#multModal').modal({backdrop: 'static', keyboard: 'false', show: 'true'})
       },
