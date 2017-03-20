@@ -14,12 +14,13 @@ import Favorites from './components/Favorites.vue'
 
 const routes = [
   { path: '/history', component: RollHistory },
-  { path: '/favorites', component: Favorites }
+  { path: '/favorites', component: Favorites },
+  { path: '/', redirect: '/history'}
 ]
 
 const router = new VueRouter({
-  routes, // short for routes: routes
-  mode: 'history'
+  // mode: 'history',
+  routes // short for routes: routes
 })
 
 Vue.use(VueRouter)

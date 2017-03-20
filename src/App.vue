@@ -88,9 +88,6 @@
       'roll-history': RollHistory,
       'favorites': Favorites
     },
-    mounted () {
-      this.$router.push(this.prefs.initialState);
-    },
     methods: {
       newRoll: function (result) {
         this.rollHistory.unshift(result)
