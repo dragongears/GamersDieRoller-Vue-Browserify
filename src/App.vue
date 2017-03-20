@@ -44,13 +44,19 @@
 
       <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
         <ul class="nav nav-tabs nav-justified">
-          <li role="presentation" class="active"><a href="#">Favorites</a></li>
-          <li role="presentation"><a href="#">History</a></li>
+          <router-link role="presentation" tag="li" active-class="active" to="/favorites">
+            <a>Favorites</a>
+          </router-link>
+          <router-link role="presentation" tag="li" active-class="active" to="/history">
+            <a>History</a>
+          </router-link>
         </ul>
       </div>
 
       <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 flex">
-        <roll-history :list="rollHistory"></roll-history>
+        <router-view :list="rollHistory"></router-view>
+        <!--<favorites></favorites>-->
+        <!--<roll-history :list="rollHistory"></roll-history>-->
       </div>
 
     </section>
@@ -64,18 +70,23 @@
   import store from './store'
   import DiePanel from './components/DiePanel.vue'
   import RollHistory from './components/RollHistory.vue'
+  import Favorites from './components/Favorites.vue'
 
   export default Vue.extend({
     name: 'app',
     data () {
       return {
         diceInHand: new store.Dice(),
-        rollHistory: []
+        rollHistory: [],
+        prefs: {
+          initialState: 'history'
+        }
       }
     },
     components: {
       'die-panel': DiePanel,
-      'roll-history': RollHistory
+      'roll-history': RollHistory,
+      'favorites': Favorites
     },
     methods: {
       newRoll: function (result) {
