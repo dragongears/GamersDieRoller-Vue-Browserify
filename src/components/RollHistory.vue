@@ -1,12 +1,15 @@
 <template>
   <div class="scroller-holder">
     <div class="scroller">
-      <ul class="list-group scroller-content">
+      <ul class="list-group scroller-content" v-if="list.length > 0">
         <li class="list-group-item" v-for="dih in list">
           {{dih.toString()}}
           <span class="badge">{{ dih.result }}</span>
         </li>
       </ul>
+      <div class="empty-list alert alert-info" v-else>
+        No previous die rolls
+      </div>
     </div>
   </div>
 </template>
@@ -55,5 +58,10 @@
   .list-group-item > .badge {
     margin-top: -2px;
     font-size: 22px;
+  }
+
+  .empty-list {
+    margin: 5px;
+    text-align: center;
   }
 </style>
